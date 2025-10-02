@@ -1,23 +1,34 @@
 package edu.com.Controller;
 
 import poly.edu.com.model.Student;
+import poly.edu.com.model.ValidateStudent;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class Slide4Controller {
-    @GetMapping("/student/form")
-    public String showForm(Model model, @ModelAttribute("student") Student student) {
-        model.addAttribute("message", "Enter student info please!");
-        return "slide4/form";
+    @RequestMapping("/student/formvalidation")
+    public String showForm(Model model, @ModelAttribute("student") ValidateStudent student) {
+        model.addAttribute("message", "Vui lòng nhập thông tin sinh viên!");
+        return "/demo/studentvalidation";
+    }
+    @RequestMapping("/student/savevalidation")
+    public String validateForm(
+            @Valid @ModelAttribute("student") ValidateStudent student,
+            Errors errors,
+            Model model) {
+
+        if(errors.hasErrors()) {
+            model.addAttribute("message", "Vui lòng sửa các lỗi sau!");
+        } else {
+            model.addAttribute("message", "Dữ liệu đã nhập đúng!");
+        }
+
+        return "/demo/studentvalidation";
     }
 
-    @PostMapping("/student/save")
-    public String saveStudent(Model model, @ModelAttribute("student") Student student) {
-        model.addAttribute("message", "Student saved successfully!");
-        return "slide4/form";
-    }
 }

@@ -1,5 +1,4 @@
 package edu.com.Controller;
-
 import poly.edu.com.model.Student;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,12 +11,12 @@ public class dataBindingController {
     @GetMapping("/student/form")
     public String showForm(Model model, @ModelAttribute("student") Student student) {
         model.addAttribute("message", "Enter student info please!");
-        return "slide4/form";
+        return "/demo/student";
     }
 
     @PostMapping("/student/save")
     public String saveStudent(Model model, @ModelAttribute("student") Student student) {
         model.addAttribute("message", "Student saved successfully!");
-        return "slide4/form";
+        return "/demo/student";
     }
 }
